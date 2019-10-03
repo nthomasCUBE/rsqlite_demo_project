@@ -44,4 +44,7 @@ dbListTables(con)
 
 res <- dbSendQuery(con,"SELECT * FROM table1;")
 print(dbFetch(res))
+res <- dbSendQuery(con,"select A,sum(B) FROM table1 group by A ;")
+print(dbFetch(res))
+
 
