@@ -7,29 +7,41 @@ library(DBI)
 con <- dbConnect(RSQLite::SQLite(), ":memory:")
 
 data=read.csv("data.txt",sep="\t",header=T)
-print(data)
-print(cn)
 cmd="CREATE TABLE table1 (";
 cn=colnames(data)
+cn_all=""
 for(x in 1:length(cn)){
-	print(cn[x])
 	cmd=paste0(cmd,cn[x])
-	cmd=paste0(cmd," varchar")
+	cmd=paste0(cmd," int")
+	cn_all=paste0(cn_all,cn[x])
 	if(x!=(length(cn))){
 		cmd=paste0(cmd,",")
+		cn_all=paste0(cn_all,",")
 	}
 }
 cmd=paste0(cmd,");")
 print(cmd)
-
-# Creating a SQLite table
 res <- dbSendQuery(con, cmd)
 
-#res <- dbSendQuery(con, "INSERT INTO table2 VALUES (1,'val1');")
-#res <- dbSendQuery(con, "INSERT INTO table2 VALUES (2,'val2');")
-#res <- dbSendQuery(con, "SELECT * FROM table2;")
-#print(dbFetch(res))
-
+for(x in 1:dim(data)[1]){
+	cmd=paste0("INSERT INTO table1 (")
+	cmd=paste0(cmd,cn_all)
+	cmd=paste0(cmd,") VALUES(")
+	for(y in 1:length(cn)){
+		cmd=paste0(cmd,data[x,y])
+		if(y!=(length(cn))){
+			cmd=paste0(cmd,",")
+		}
+	}
+	cmd=paste0(cmd,");");
+	print(cmd)
+	dbBegin(con)
+	res <- dbSendQuery(con, cmd)
+	dbClearResult(res)
+	dbCommit(con)
+}
 dbListTables(con)
 
+res <- dbSendQuery(con,"SELECT * FROM table1;")
+print(dbFetch(res))
 
