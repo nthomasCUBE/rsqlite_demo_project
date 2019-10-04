@@ -6,6 +6,11 @@ library(DBI)
 
 con <- dbConnect(RSQLite::SQLite(), ":memory:")
 
+#	----------------------------------------------------------------
+#
+#	Creating the SQL Table
+#
+#	----------------------------------------------------------------
 data=read.csv("data.txt",sep="\t",header=T)
 cmd="CREATE TABLE table1 (";
 cn=colnames(data)
@@ -23,6 +28,11 @@ cmd=paste0(cmd,");")
 print(cmd)
 res <- dbSendQuery(con, cmd)
 
+#	----------------------------------------------------------------
+#
+#	Storing the entries within the SQL Table
+#
+#	----------------------------------------------------------------
 for(x in 1:dim(data)[1]){
 	cmd=paste0("INSERT INTO table1 (")
 	cmd=paste0(cmd,cn_all)
@@ -44,7 +54,10 @@ dbListTables(con)
 
 res <- dbSendQuery(con,"SELECT * FROM table1;")
 print(dbFetch(res))
-res <- dbSendQuery(con,"select A,sum(B) FROM table1 group by A ;")
-print(dbFetch(res))
+res <- dbSendQuery(con,"SELECT A,SUM(B) FROM table1 GROUP BY A;")
+my_d=(dbFetch(res))
+barplot(my_d[,2],names=my_d[,1],col=1:length(my_d[,1]))	
+
+
 
 
