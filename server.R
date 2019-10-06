@@ -15,7 +15,11 @@ server <- function(input, output, session)
 	#	----------------------------------------------
 	observeEvent(input$file1,{
 		v$file1=input$file1
-	})
+		shinyalert(title = "SQLite database was uploaded!", type = "success")
+		 updateTextAreaInput(session, "caption",
+		      label = "label",
+		      value = "value")
+  	})
 
 	
 	#	----------------------------------------------
