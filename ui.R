@@ -46,6 +46,7 @@ body, label, input, button, select {
 		tabsetPanel(id = "tabset",
 		tabPanel("SQLite demo",
 			fileInput("file1", "SQLite database", multiple = TRUE, accept = c("text/text", ".db",".sqlite")),
+			textInput("text1","SQL command",value="",width=NULL,placeholder="Enter SQL command..."),
 			actionButton("goButton", "Analyse dataset!")))),
 		mainPanel(
 			useShinyjs(),

@@ -1,9 +1,9 @@
 library(DBI)
 
-load_data=function(my_file, output){
+load_data=function(my_file, output, sql_command){
 	con <- dbConnect(RSQLite::SQLite(), dbname=my_file)
 	print(dbListTables(con))
-	res <- dbSendQuery(con,"SELECT * FROM Test;")
+	res <- dbSendQuery(con,sql_command)
 	data=dbFetch(res)
 	df=as.data.frame(data)
 	output$plot=renderPlot({

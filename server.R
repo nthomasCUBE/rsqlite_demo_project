@@ -24,6 +24,7 @@ server <- function(input, output, session)
 	observeEvent(input$goButton,{
 		print(v$file1)
 		source("methods.R")
-		load_data(v$file1$name, output)		
+		my_command=input$text1
+		load_data(v$file1$name, output, my_command)		
 	})
 }
