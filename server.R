@@ -16,12 +16,23 @@ server <- function(input, output, session)
 	observeEvent(input$file1,{
 		v$file1=input$file1
 		shinyalert(title = "SQLite database was uploaded!", type = "success")
-		 updateTextAreaInput(session, "caption",
+	
+		con <- dbConnect(RSQLite::SQLite(), dbname=input$file1$name)
+		my_tables=(dbListTables(con))
+
+		arr=c()
+		for(x in 1:length(my_tables)){
+			res <- dbSendQuery(con,paste0("SELECT sql FROM sqlite_master WHERE tbl_name = '",my_tables[x],"' AND type = 'table'"))
+			data=dbFetch(res)
+			arr=c(arr,data)
+		}
+
+		updateTextAreaInput(session, "caption",
 		      label = "label",
-		      value = "value")
+		      value = paste(arr))
+		
   	})
 
-	
 	#	----------------------------------------------
 	#	Go Button
 	#	----------------------------------------------
