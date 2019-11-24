@@ -22,3 +22,6 @@ Few examples for storing data into a textbased sqlite databse
 '''
 select name,expr1,expr2 from Test where name LIKE 'gene1%'
 '''
+
+### ... also more conditions can be shown and compared
+![alt text](https://github.com/nthomasCUBE/rsqlite_demo_project/blob/master/Figure1v5b.png)
