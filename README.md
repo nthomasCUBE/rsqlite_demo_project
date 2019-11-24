@@ -2,7 +2,7 @@
 
 ## Installation
 
-###Preinstallation of two packages:
+### Preinstallation of two packages:
 1. Shiny
 2. RSQLite (install.packages('RSQLite')
 
