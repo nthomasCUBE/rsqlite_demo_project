@@ -18,3 +18,7 @@ storing data into sqlite database
 Few examples for storing data into a textbased sqlite databse
 
 ![alt text](https://github.com/nthomasCUBE/rsqlite_demo_project/blob/master/Figure1v4.png)
+
+'''
+select name,expr1,expr2 from Test where name LIKE 'gene1%'
+'''
