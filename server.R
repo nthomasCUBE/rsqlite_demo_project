@@ -40,6 +40,7 @@ server <- function(input, output, session)
 		print(v$file1)
 		source("methods.R")
 		my_command=input$text1
-		load_data(v$file1$name, output, my_command)		
+		print(c("vis1::",input$vis1))
+		load_data(v$file1$name, output, my_command, input$vis1)		
 	})
 }
