@@ -36,7 +36,17 @@ load_data=function(my_file, output, sql_command, vis_type){
 	}else{
 		output$plot=renderPlot({
 			print(df)
-			boxplot(df[,2:dim(df)[2]],names=colnames(df)[2:length(colnames(df))])
+			A=(unlist(df[,2:dim(df)[2]]))
+			B=c()
+			for(x in 2:dim(df)[2]){
+				B=c(B,rep(colnames(df)[x],length(A)))
+			}
+			df_n=data.frame(expr=A,condition=B)
+			print(df_n)
+			#boxplot(df[,2:dim(df)[2]],names=colnames(df)[2:length(colnames(df))])
+			p <- ggplot(df_n, aes(x=condition, y=expr, color=condition)) +   geom_boxplot()	
+			p <- p + geom_jitter(shape=16, position=position_jitter(0.2))
+			print(p)
 		})
 	}
 }
